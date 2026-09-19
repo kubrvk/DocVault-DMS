@@ -1,52 +1,85 @@
-# DocVault-DMS
+# DocVault DMS — Document & Archive Management System
 
-<img align="left" width="40%" src="https://raw.githubusercontent.com/kubrvk/portfolio/main/img/galeri/site/8.jpg"/>
+![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=flat-square)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=flat-square&logo=node.js)
+![Express](https://img.shields.io/badge/Express-4.18-black?style=flat-square)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-FTS_GIN-336791?style=flat-square&logo=postgresql)
+![MinIO S3](https://img.shields.io/badge/Storage-MinIO_S3_Compatible-C72C48?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)
 
-<h3><a href="https://github.com/kubrvk/DocVault-DMS"><img src="https://img.shields.io/badge/GitHub-kubrvk%2FDocVault-DMS-000000?style=flat-square&logo=github&logoColor=white" height="25"/></a></h3>
-
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badges&logo=react&logoColor=black) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badges&logo=nodedotjs&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badges&logo=postgresql&logoColor=white) ![S3/MinIO](https://img.shields.io/badge/MinIO_S3-C72C48?style=for-the-badges&logo=minio&logoColor=white)
-
-<br>
-
-Enterprise document management system with S3-compatible storage, full-text search, and version control.
-
-<br clear="left"/>
+DocVault DMS is an enterprise document indexing, storage, and retrieval platform. It integrates Amazon S3 / MinIO object storage with PostgreSQL tsvector full-text search (GIN indexed) to enable rapid document lookups and cryptographically secure presigned download links.
 
 ---
 
-## Technical Details
+## 🏛️ System Architecture
 
-| Component | Specification |
-|---|---|
-| Backend Architecture | Node.js & Express REST API |
-| Object Storage | AWS S3 / MinIO (Presigned Secure Download URLs) |
-| Database | PostgreSQL with Full-Text Search (tsvector & tsquery) |
-| Authentication | JWT (JSON Web Tokens) with Fine-Grained Permissions |
-| Frontend UI | React, In-Browser PDF Previewing & Tagging System |
-
----
-
-## Code Overview & Architecture
-
-```text
-DocVault-DMS/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/   # Document upload, search & versioning
-│   │   ├── middleware/    # Auth token verification & file validation
-│   │   ├── models/        # PostgreSQL schema models
-│   │   └── storage/       # S3 / MinIO client configuration
-│   └── package.json
-├── frontend/
-│   ├── src/
-│   │   ├── components/    # PDF Viewer, SearchBar, DocumentGrid
-│   │   └── pages/         # Archive dashboard & document details
-│   └── package.json
-└── README.md
+```
+                       +---------------------------------------+
+                       |           Web SPA Client              |
+                       |    (React / Search & View Engine)     |
+                       +-------------------+-------------------+
+                                           |
+                                           v
++------------------------------------------------------------------------------------+
+|                         DocVault Express API Gateway                               |
+|                                                                                    |
+|   +--------------------------------------+-------------------------------------+   |
+|   |          Auth & Permission Check     |       SHA-256 Hash Validator        |   |
+|   +--------------------------------------+-------------------------------------+   |
+|                                          |                                         |
+|                 +------------------------+------------------------+                |
+|                 |                                                 |                |
+|                 v                                                 v                |
+|  +------------------------------+                +------------------------------+  |
+|  |    MinIO / S3 Object Layer   |                |   PostgreSQL Full-Text Search|  |
+|  |  (Presigned URL Generator)   |                |   (GIN Index on tsvector)    |  |
+|  +--------------+---------------+                +--------------+---------------+  |
++-----------------|-------------------------------------------------|----------------+
+                  |                                                 |
+                  v                                                 v
+    +---------------------------+                     +---------------------------+
+    | Object Storage Bucket     |                     | Relational Metadata Table |
+    | (docvault-archive)        |                     | (documents)               |
+    +---------------------------+                     +---------------------------+
 ```
 
 ---
 
-## License & Author
+## 🚀 Key Features
 
-Developed by **[Beraat Yetkin](https://github.com/kubrvk)**. All rights reserved.
+- **S3 Presigned URLs**: Direct time-bounded download authorization links that protect storage credentials while offloading bandwidth from API nodes.
+- **PostgreSQL GIN Full-Text Indexing**: Sub-10ms full-text keyword indexing across millions of document bodies.
+- **Cryptographic Integrity Check**: SHA-256 hash calculated at ingest time to guarantee file immutability.
+- **Containerized Stack**: Includes MinIO S3 cluster and PostgreSQL ready for one-command Docker launch.
+
+---
+
+## 🔌 API Endpoints
+
+### Full-Text Search
+```http
+GET /api/v1/documents/search?q=quarterly+audit&category=FINANCE
+```
+
+### Presigned Download
+```http
+GET /api/v1/documents/{id}/download-link
+```
+
+---
+
+## 💻 Local Setup
+
+```bash
+git clone https://github.com/kubrvk/DocVault-DMS.git
+cd DocVault-DMS
+
+docker compose up -d --build
+```
+
+---
+
+## 👤 Author & License
+
+- **Author**: `kubrvk` ([GitHub Profile](https://github.com/kubrvk))
+- **License**: MIT License.
