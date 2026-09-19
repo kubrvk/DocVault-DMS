@@ -9,6 +9,8 @@
 
 DocVault DMS is an enterprise document indexing, storage, and retrieval platform. It integrates Amazon S3 / MinIO object storage with PostgreSQL tsvector full-text search (GIN indexed) to enable rapid document lookups and cryptographically secure presigned download links.
 
+![DocVault DMS Dashboard](docs/preview.jpg)
+
 ---
 
 ## 🏛️ System Architecture
