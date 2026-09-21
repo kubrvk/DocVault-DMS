@@ -1,105 +1,105 @@
-# DocVault DMS 🔐
-> **Kriptografik Bulut Belge Kasası • Google Drive & Box Mimarili Sıfır Bilgi (Zero-Knowledge) Arşivi**
+# DocVault DMS
+> Cryptographic Cloud Document Vault • Google Drive & Box Architecture
 
-[![Canlı Demo](https://img.shields.io/badge/Canl%C4%B1_Demo-docvaultdms.web.app-0284c7?style=for-the-badge&logo=google-chrome&logoColor=white)](https://docvaultdms.web.app)
-[![Lisans](https://img.shields.io/badge/Lisans-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![Teknoloji](https://img.shields.io/badge/Teknoloji-Vanilla_ES6%2B_No_Framework-yellow?style=for-the-badge&logo=javascript)](https://developer.mozilla.org)
-[![Arayüz](https://img.shields.io/badge/Tasar%C4%B1m-Cloud_Vault_Sidebar-082f49?style=for-the-badge&logo=css3)](https://developer.mozilla.org)
-[![Dil](https://img.shields.io/badge/Dil-T%C3%BCrk%C3%A7e_%7C_English-green?style=for-the-badge)](https://docvaultdms.web.app)
-
----
-
-## 📸 Canlı Önizleme (Previews)
-
-### 1. Kriptografik Doküman Kasası & Bulut Alanı
-Google Drive / Box mimarili sol klasör ağacı, S3 canlı depolama kotası kartı (`22.7 MB / 100 MB`), SHA-256 doğrulama özetleri ve **Kasadan Sil** aksiyonu:
-![DocVault DMS Kasa Önizleme](docs/preview-dashboard.png)
-
-### 2. Sıfır Bilgi (Zero-Knowledge) Siber Giriş Geçidi
-Siber radial ızgara zemin, glassmorphic buzlu cam kart, SHA-256 HMAC & AES-256 GCM durum şeridi, yetki kademeleri:
-![DocVault DMS Login Önizleme](docs/preview-login.png)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-docvaultdms.web.app-0284c7?style=for-the-badge)](https://docvaultdms.web.app)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![Technology](https://img.shields.io/badge/Technology-Vanilla_ES6%2B-yellow?style=for-the-badge)](https://developer.mozilla.org)
+[![Interface](https://img.shields.io/badge/Interface-Cloud_Vault_Sidebar-082f49?style=for-the-badge)](https://developer.mozilla.org)
+[![Language Support](https://img.shields.io/badge/Language-English_%7C_Turkish-green?style=for-the-badge)](https://docvaultdms.web.app)
 
 ---
 
-## 🌟 Öne Çıkan Özellikler
+## Previews
 
-### 1. Sektöre Özgü Kriptografik Kasa Mimarisi
-- **Google Drive / Box Tarzı Kasa Navigasyonu (`.vault-sidebar`)**: Canlı depolama kotası kartı (`.vault-storage-card`), S3 havuz doluluk çubuğu, klasör filtreleri (*Sözleşmeler*, *Mali Denetim*, *Mimari Projeler*, *Politika & Uyum*) ve gizlilik kademeleri (*Gizli*, *Kısıtlı*, *Kurum İçi*, *Halka Açık*).
-- **Kriptografik SHA-256 Bütünlük Doğrulaması**: Yüklenen her dosya için SHA-256 hash parmak izi hesaplanır ve AWS S3 geçici güvenli indirme simülasyonu sunulur.
-- **Sıfır Bilgi (Zero-Knowledge) Siber Giriş Geçidi**: Uçtan uca şifreli oturum açma, HSM anahtarı doğrulama ve siber neon mavi atmosfer.
+### 1. Cryptographic Document Repository & Cloud Storage
+Google Drive / Box-style directory navigation sidebar, live S3 storage quota meter, SHA-256 integrity digests, and document deletion actions:
+![DocVault DMS Vault Preview](docs/preview-dashboard.png)
 
-### 2. Belge Silme & Canlı Kota İndirgeme
-- **Kasadan Belgeyi Sil (`promptDeleteDoc`)**: Her belgenin yanında kırmızı çöp kutusu butonu bulunur. Tıklandığında `#deleteDocModal` onay penceresi açılır.
-- **Reaktif S3 Kota Düşürme (`calculateStorage`)**: Silinen belgenin dosya boyutu (MB) S3 havuzundan anında düşer, doluluk yüzdesi geriler ve `DELETION_PURGE` denetim logu yazılır.
-- **Kalıcı `localStorage`**: Silinen belgeler `dv_docs_v2` anahtarıyla yerel hafızadan çıkarılır; yenilemelerde veri bütünlüğü korunur.
-
-### 3. Oturum Kalıcılığı (Session Persistence) & Zero-Flicker Başlangıç
-- **Sayfa Yenilemelerinde Oturumu Hatırla**: Başarılı kimlik doğrulamasında `localStorage.setItem('dv_logged_in', 'true')` kaydı yazılır.
-- **Sıfır Titreme (Zero-Flicker)**: Sayfa yenilendiğinde (F5) inline script kontrolü sayesinde giriş ekranı hiç açılmadan doğrudan kasa açılır.
-- **Güvenli Çıkış**: Sol alt kullanıcı alanındaki kırmızı **"Çıkış"** butonuna basıldığında oturum sonlandırılır.
-- **Hazır Demo Bilgileri**: Giriş ekranında arşivci kimliği ve şifre hazır girili gelir; altındaki hızlı rol butonlarıyla (`Arşiv Yöneticisi`, `Uyumluluk Denetçisi`, `Hukuk Danışmanı`, `Personel`) tek tıkla yetki değiştirilebilir.
-
-### 4. Çift Dilli Tam Destek (TR | EN)
-- Sağ üstteki `[ TR | EN ]` dil seçici ile tüm belge kategorileri, gizlilik etiketleri, denetim logları ve modal metinleri anında çevrilir.
-- Başlangıç varsayılan dili **Türkçe**'dir.
+### 2. Zero-Knowledge Cyber Gateway Login Portal
+Cyber radial grid background, glassmorphic card, SHA-256 HMAC and AES-256 GCM security status indicators, and clearance tier selector:
+![DocVault DMS Login Preview](docs/preview-login.png)
 
 ---
 
-## 🛠️ Teknoloji Yığını (Tech Stack)
+## Key Features
 
-| Katman | Teknoloji | Açıklama |
+### Cryptographic Cloud Vault Architecture
+- Cloud Storage Navigation: Left sidebar featuring an active S3 storage capacity card, folder filters (Contracts, Financial Audits, Architecture Projects, Policy & Compliance), and classification levels (Confidential, Restricted, Internal, Public).
+- SHA-256 Integrity Verification: Computes cryptographic hash fingerprints for uploaded records and simulates Amazon S3 pre-signed secure download links.
+- Zero-Knowledge Security Gateway: Simulates client-side encryption and Hardware Security Module (HSM) clearance authentication.
+
+### Document Deletion & Reactive Storage Quota Reduction
+- Prominent delete action on every document record triggering an explicit confirmation dialog.
+- Reactive quota reduction: deleting a record immediately reclaims capacity from the S3 storage pool, updates the progress meter, and logs an audit record.
+- LocalStorage synchronization ensures purged records remain removed across browser reloads.
+
+### Session Persistence & Zero-Flicker Initialization
+- Preserves clearance session across browser refreshes via localStorage.
+- Inline authentication check prevents login screen flashes upon page reload.
+- Secure sign-out action clears session tokens and restores the cyber gateway.
+- Pre-filled credentials with instant role switches (Vault Administrator, Compliance Officer, Legal Counsel, Staff).
+
+### Bilingual Support (English | Turkish)
+- Instant language toggle switching all document categories, confidentiality levels, audit records, and modals without page reload.
+- Default language is English.
+
+---
+
+## Tech Stack
+
+| Layer | Technology | Description |
 | :--- | :--- | :--- |
-| **Arayüz (UI)** | HTML5, CSS3 Glassmorphism | Buzlu cam efektleri (`backdrop-filter`), siber ızgara arka plan |
-| **İş Mantığı** | Vanilla ES6+ JavaScript | S3 kota hesaplama, SHA-256 hash simülasyonu, filtreleme |
-| **İkonlar** | Bootstrap Icons v1.11.3 | Kripto ve dosya türü ikonları |
-| **Depolama** | HTML5 `localStorage` | Şifreli belge metaverisi, denetim izleri, oturum bilgisi |
-| **Yayın** | Firebase Hosting | Google CDN üzerinden güvenli HTTPS dağıtımı |
+| UI & Layout | HTML5, CSS3 Glassmorphism | Frosted glass cards, dark radial cyber grid |
+| Business Logic | Vanilla ES6+ JavaScript | Storage quota calculations, SHA-256 digest simulation, filtering |
+| Icons | Bootstrap Icons v1.11.3 | Cryptographic and file-type icons |
+| Storage | HTML5 localStorage | Encrypted document metadata, audit logs, session state |
+| Hosting | Firebase Hosting | Secure HTTPS global edge distribution |
 
 ---
 
-## 📁 Proje Dizin Yapısı
+## Directory Structure
 
 ```
 DocVault-DMS/
-├── index.html              # Kriptografik bulut kasası ve login geçidi
-├── docs/                   # Dokümantasyon ve ekran görüntüleri
-│   ├── preview-dashboard.png # Belge ambarı yüksek çözünürlüklü önizleme
-│   └── preview-login.png     # Zero-Knowledge siber geçit önizleme
-└── README.md               # Proje dokümantasyonu
+├── index.html              # Complete single-page application
+├── docs/                   # Documentation assets and screenshots
+│   ├── preview-dashboard.png # High-resolution repository preview
+│   └── preview-login.png     # High-resolution login portal preview
+└── README.md               # Project documentation
 ```
 
 ---
 
-## ⚡ Hızlı Başlangıç (Local Setup)
+## Getting Started
 
-1. Depoyu klonlayın:
+1. Clone the repository:
    ```bash
    git clone https://github.com/kubrvk/DocVault-DMS.git
    cd DocVault-DMS
    ```
-2. `index.html` dosyasını tarayıcınızda açın:
+2. Open `index.html` directly in your browser:
    ```bash
    start index.html
    ```
-3. Alternatif yerel HTTP sunucusu ile çalıştırmak için:
+3. Alternatively, serve with any local HTTP server:
    ```bash
    npx serve .
    ```
-4. Tarayıcınızda açılan adrese gidin.
-   - *Giriş ekranını atlayıp doğrudan belge kasasını açmak için:* `http://localhost:3000/?demo=1`
+4. Access `http://localhost:3000` in your browser.
+   - To bypass login and view the vault directly: `http://localhost:3000/?demo=1`
 
 ---
 
-## 🌐 Canlı Sistem
+## Live System
 
-- **Canlı URL**: [https://docvaultdms.web.app](https://docvaultdms.web.app)
-- **Doğrudan Demo Bağlantısı**: [https://docvaultdms.web.app/?demo=1](https://docvaultdms.web.app/?demo=1)
+- Live URL: [https://docvaultdms.web.app](https://docvaultdms.web.app)
+- Direct Dashboard Link: [https://docvaultdms.web.app/?demo=1](https://docvaultdms.web.app/?demo=1)
 
 ---
 
-## 👤 Geliştirici
+## Author
 
-**Developed by Beraat Yetkin**
+Developed by Beraat Yetkin
 - GitHub: [@kubrvk](https://github.com/kubrvk)
-- Proje Deposu: [DocVault-DMS](https://github.com/kubrvk/DocVault-DMS)
-- Portfolyo: [Beraat Yetkin Portfolio](https://github.com/kubrvk/portfolio)
+- Repository: [DocVault-DMS](https://github.com/kubrvk/DocVault-DMS)
+- Portfolio: [Beraat Yetkin Portfolio](https://github.com/kubrvk/portfolio)
