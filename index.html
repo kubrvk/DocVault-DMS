@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="tr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DocVault DMS — Secure Enterprise Document Management &amp; Archival</title>
-  <meta name="description" content="DocVault DMS: Enterprise document repository featuring SHA-256 integrity verification, S3 presigned secure retrieval, and compliance access control. Developed by Beraat Yetkin.">
+  <title>DocVault DMS — Güvenli Kurumsal Belge &amp; Arşiv Kasası</title>
+  <meta name="description" content="DocVault DMS: SHA-256 bütünlük doğrulamalı, S3 presigned güvenli erişimli ve mevzuat uyumlu kurumsal kriptografik doküman kasası. Developed by Beraat Yetkin.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 6a2 2 0 0 1 2-2h8l2 3h12a2 2 0 0 1 2 2v17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z' fill='%230284c7'/%3E%3Cpath d='M16 14a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2z' fill='%23ffffff'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,27 +43,44 @@
       font-size: 14.5px;
       line-height: 1.5;
     }
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0.85rem 2rem;
+
+    /* Layout Shell: Cloud Vault Layout */
+    .vault-app-shell {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+    .vault-sidebar {
+      width: 270px;
+      background: #ffffff;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
       position: sticky;
       top: 0;
-      z-index: 100;
-      box-shadow: var(--shadow-sm);
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 90;
+      padding: 1.25rem 1rem;
     }
+    @media (max-width: 960px) {
+      .vault-app-shell { flex-direction: column; }
+      .vault-sidebar { width: 100%; height: auto; position: static; }
+    }
+
     .brand {
       display: flex;
       align-items: center;
       gap: 0.75rem;
       font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: -0.5px;
+      font-size: 1.2rem;
+      letter-spacing: -0.4px;
       color: var(--text);
       text-decoration: none;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
     }
     .brand-icon {
       width: 36px;
@@ -76,29 +93,113 @@
       justify-content: center;
       font-size: 1.2rem;
     }
-    .header-center {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--primary-subtle);
-      padding: 0.35rem 0.85rem;
+
+    /* Vault Storage Meter Card */
+    .vault-storage-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .storage-bar {
+      height: 6px;
+      background: #e2e8f0;
       border-radius: 999px;
-      font-size: 0.82rem;
-      color: var(--primary);
-      font-weight: 600;
-      border: 1px solid #bae6fd;
+      overflow: hidden;
+      margin: 0.4rem 0;
     }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: #0284c7;
-      border-radius: 50%;
-      display: inline-block;
+    .storage-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 999px;
+      transition: width 0.3s ease;
     }
-    .header-right {
+
+    /* Vault Nav List */
+    .vault-nav-group {
+      margin-bottom: 1.25rem;
+    }
+    .vault-nav-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      padding-left: 0.5rem;
+    }
+    .vault-nav-item {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .vault-nav-item:hover {
+      background: #f1f5f9;
+    }
+    .vault-nav-item.active {
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border-color: #bae6fd;
+    }
+    .vault-nav-item i {
+      margin-right: 0.5rem;
+      font-size: 1rem;
+    }
+    .vault-badge {
+      font-size: 0.75rem;
+      background: #e2e8f0;
+      color: #475569;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .vault-nav-item.active .vault-badge {
+      background: #0284c7;
+      color: #ffffff;
+    }
+
+    .vault-tier-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.35rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+
+    /* Main Column */
+    .vault-main-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--bg);
+    }
+    .vault-topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      box-shadow: var(--shadow-sm);
+      gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -165,9 +266,7 @@
 
     main {
       flex: 1;
-      padding: 2rem;
-      max-width: 1320px;
-      margin: 0 auto;
+      padding: 1.5rem 2rem;
       width: 100%;
     }
 
@@ -224,25 +323,6 @@
       color: var(--text-muted);
     }
 
-    .cat-pills {
-      display: flex;
-      gap: 0.5rem;
-      overflow-x: auto;
-    }
-    .cat-pill {
-      padding: 0.45rem 0.85rem;
-      border: 1px solid var(--border-strong);
-      border-radius: 999px;
-      background: #fff;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.15s;
-    }
-    .cat-pill:hover { border-color: var(--primary); }
-    .cat-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-
     .doc-table {
       width: 100%;
       border-collapse: collapse;
@@ -257,7 +337,7 @@
       border-bottom: 1px solid var(--border);
     }
     .doc-table td {
-      padding: 0.9rem 1rem;
+      padding: 0.85rem 1rem;
       border-bottom: 1px solid var(--border);
       vertical-align: middle;
     }
@@ -552,114 +632,185 @@
     </div>
   </div>
 
-  <!-- Header -->
-  <header>
-    <a href="index.html" class="brand">
-      <div class="brand-icon"><i class="bi bi-folder-check"></i></div>
-      <div>
-        <span>DocVault DMS</span>
-        <span id="brandSub" style="font-size:0.75rem;font-weight:500;color:var(--text-muted);display:block;margin-top:-3px;">Güvenli Kurumsal Belge &amp; Arşiv Yönetimi</span>
+  <div class="vault-app-shell">
+    <!-- Google Drive / Cloud Vault Left Navigation Dock -->
+    <aside class="vault-sidebar">
+      <a href="index.html" class="brand">
+        <div class="brand-icon"><i class="bi bi-folder-check"></i></div>
+        <div>
+          <span>DocVault<span style="color:var(--primary);">DMS</span></span>
+          <span id="brandSub" style="font-size:0.72rem;font-weight:500;color:var(--text-muted);display:block;margin-top:-2px;">Kriptografik Bulut Kasası</span>
+        </div>
+      </a>
+
+      <!-- Storage Quota Widget -->
+      <div class="vault-storage-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;margin-bottom:0.4rem;">
+          <span style="font-weight:700;color:#0f172a;" id="lblStorageTitle"><i class="bi bi-hdd-network text-primary"></i> Bulut Alanı</span>
+          <span id="storagePercentText" style="font-family:var(--font-mono);font-size:0.78rem;color:var(--primary);font-weight:800;">24.8%</span>
+        </div>
+        <div class="storage-bar">
+          <div class="storage-fill" id="storageFill" style="width: 24.8%;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.74rem;color:var(--text-muted);margin-top:0.35rem;">
+          <span id="storageUsedText" style="font-weight:600;color:#0f172a;">24.8 MB</span>
+          <span id="lblStoragePool">100 MB S3 Havuzu</span>
+        </div>
       </div>
-    </a>
 
-    <div class="header-center">
-      <span class="status-dot"></span>
-      <span id="headerStatus">S3 Uyumlu Nesne Depolama &bull; SHA-256 Bütünlük Doğrulamalı</span>
-    </div>
-
-    <div class="header-right">
-      <div class="lang-toggle" onclick="toggleLanguage()">
-        <span id="langTr" class="active">TR</span>
-        <span style="opacity:0.4;">|</span>
-        <span id="langEn">EN</span>
+      <!-- Navigation Directories -->
+      <div class="vault-nav-group">
+        <div class="vault-nav-title" id="lblNavFolders">ARŞİV DİZİNLERİ</div>
+        <button class="vault-nav-item active" onclick="filterCategory('all', this)" id="pillAll">
+          <span><i class="bi bi-folder2-open text-primary"></i> <span id="fldAll">Tüm Belgeler</span></span>
+          <span class="vault-badge" id="badgeAllCount">10</span>
+        </button>
+        <button class="vault-nav-item" onclick="filterCategory('Legal & Contracts', this)" id="pillLegal">
+          <span><i class="bi bi-folder-fill" style="color:#0284c7;"></i> <span id="fldLegal">Sözleşmeler</span></span>
+          <span class="vault-badge" id="badgeLegalCount">2</span>
+        </button>
+        <button class="vault-nav-item" onclick="filterCategory('Financial Audits', this)" id="pillFinance">
+          <span><i class="bi bi-folder-fill" style="color:#d97706;"></i> <span id="fldFinance">Mali Denetim</span></span>
+          <span class="vault-badge" id="badgeFinanceCount">2</span>
+        </button>
+        <button class="vault-nav-item" onclick="filterCategory('Architecture', this)" id="pillArch">
+          <span><i class="bi bi-folder-fill" style="color:#8b5cf6;"></i> <span id="fldArch">Mimari Projeler</span></span>
+          <span class="vault-badge" id="badgeArchCount">3</span>
+        </button>
+        <button class="vault-nav-item" onclick="filterCategory('HR & Policies', this)" id="pillPolicy">
+          <span><i class="bi bi-folder-fill" style="color:#10b981;"></i> <span id="fldPolicy">Politika &amp; Uyum</span></span>
+          <span class="vault-badge" id="badgePolicyCount">3</span>
+        </button>
       </div>
-      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.88rem;">
-        <i class="bi bi-person-circle" style="font-size:1.3rem;color:var(--primary);"></i>
-        <span id="userNameText" style="font-weight:600;">Arşiv Yöneticisi</span>
-        <span id="userRoleText" style="font-size:0.75rem;background:#e2e8f0;padding:0.15rem 0.45rem;border-radius:4px;color:#475569;">Vault Admin</span>
+
+      <!-- Security Clearance Levels -->
+      <div class="vault-nav-group">
+        <div class="vault-nav-title" id="lblNavTiers">GÜVENLİK KADEMELERİ</div>
+        <div style="display:flex;flex-direction:column;gap:0.4rem;padding:0.2rem 0.4rem;">
+          <div class="vault-tier-item"><span class="badge badge-confidential">Gizli</span> <span id="lblConfDesc" style="font-size:0.75rem;color:var(--text-muted);">En Yüksek Yetki</span></div>
+          <div class="vault-tier-item"><span class="badge badge-restricted">Kısıtlı</span> <span id="lblRestrDesc" style="font-size:0.75rem;color:var(--text-muted);">Departman İçi</span></div>
+          <div class="vault-tier-item"><span class="badge badge-internal">Kurum İçi</span> <span id="lblInternDesc" style="font-size:0.75rem;color:var(--text-muted);">Tüm Personel</span></div>
+          <div class="vault-tier-item"><span class="badge badge-public">Halka Açık</span> <span id="lblPubDesc" style="font-size:0.75rem;color:var(--text-muted);">Genel Erişim</span></div>
+        </div>
       </div>
-      <button class="btn btn-outline btn-sm" onclick="openAuthModal()" id="btnSwitchRole">
-        <i class="bi bi-person-gear"></i> <span id="lblSwitchRole">Rol Değiştir</span>
-      </button>
-      <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:#fca5a5;" onclick="logoutUser()">
-        <i class="bi bi-box-arrow-right"></i> <span id="lblLogout">Çıkış</span>
-      </button>
-    </div>
-  </header>
 
-  <!-- Navigation Tabs -->
-  <div class="nav-tabs-bar">
-    <button class="tab-btn active" onclick="switchTab('repo', this)" id="tabBtnRepo">
-      <i class="bi bi-archive"></i> <span id="lblTabRepo">Kurumsal Belge Ambarı</span> (<span id="docCountBadge">10</span>)
-    </button>
-    <button class="tab-btn" onclick="switchTab('audit', this)" id="tabBtnAudit">
-      <i class="bi bi-shield-check"></i> <span id="lblTabAudit">Erişim &amp; Uyum Denetim İzi</span>
-    </button>
-  </div>
-
-  <main>
-    <!-- TAB 1: Document Repository -->
-    <div id="tab-repo" class="tab-pane">
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <h2 class="card-title" id="repoTitle"><i class="bi bi-files text-primary"></i> Kriptografik Doküman Kasası</h2>
-            <div id="repoDesc" style="font-size:0.85rem;color:var(--text-muted);margin-top:0.2rem;">SHA-256 bütünlük doğrulamalı kurumsal arşiv ve S3 geçici güvenli indirme bağlantıları.</div>
+      <div style="margin-top:auto;padding-top:1rem;border-top:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;margin-bottom:0.75rem;">
+          <i class="bi bi-person-circle" style="font-size:1.3rem;color:var(--primary);"></i>
+          <div style="overflow:hidden;">
+            <div id="userNameText" style="font-weight:700;white-space:nowrap;text-overflow:ellipsis;font-size:0.84rem;">Arşiv Yöneticisi</div>
+            <div id="userRoleText" style="font-size:0.72rem;color:var(--text-muted);">Vault Admin</div>
           </div>
+        </div>
+        <div style="display:flex;gap:0.4rem;">
+          <button class="btn btn-outline btn-sm" style="flex:1;font-size:0.78rem;" onclick="openAuthModal()" id="btnSwitchRole">
+            <i class="bi bi-person-gear"></i> <span id="lblSwitchRole">Rol</span>
+          </button>
+          <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:#fca5a5;font-size:0.78rem;" onclick="logoutUser()">
+            <i class="bi bi-box-arrow-right"></i> <span id="lblLogout">Çıkış</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Vault Repository Column -->
+    <div class="vault-main-body">
+      <!-- Topbar Header -->
+      <header class="vault-topbar">
+        <div style="display:flex;align-items:center;gap:0.75rem;flex:1;max-width:580px;">
+          <div class="search-box" style="min-width:0;width:100%;">
+            <i class="bi bi-search"></i>
+            <input type="text" id="searchInput" placeholder="Başlık, kategori veya SHA-256 hash ile arayın..." oninput="renderDocuments()">
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="header-center" style="display:flex;align-items:center;gap:0.4rem;background:var(--primary-subtle);padding:0.35rem 0.85rem;border-radius:999px;font-size:0.8rem;color:var(--primary);font-weight:600;border:1px solid #bae6fd;">
+            <span class="status-dot" style="width:8px;height:8px;background:var(--primary);border-radius:50%;display:inline-block;"></span>
+            <span id="headerStatus">S3 &bull; SHA-256 Mühürlü</span>
+          </div>
+
+          <div class="lang-toggle" onclick="toggleLanguage()">
+            <span id="langTr" class="active">TR</span>
+            <span style="opacity:0.4;">|</span>
+            <span id="langEn">EN</span>
+          </div>
+
           <button class="btn btn-primary btn-sm" onclick="openUploadModal()" id="btnUpload">
             <i class="bi bi-cloud-arrow-up-fill"></i> <span id="lblBtnUpload">Yeni Belge Yükle</span>
           </button>
         </div>
+      </header>
 
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-          <div class="search-box">
-            <i class="bi bi-search"></i>
-            <input type="text" id="searchInput" placeholder="Başlık, kategori veya SHA-256 hash ile arayın..." oninput="renderDocuments()">
-          </div>
-
-          <div class="cat-pills">
-            <button class="cat-pill active" onclick="filterCategory('all', this)" id="pillAll">Tümü</button>
-            <button class="cat-pill" onclick="filterCategory('Legal & Contracts', this)" id="pillLegal">Sözleşmeler</button>
-            <button class="cat-pill" onclick="filterCategory('Financial Audits', this)" id="pillFinance">Mali Denetim</button>
-            <button class="cat-pill" onclick="filterCategory('Architecture', this)" id="pillArch">Mimari Projeler</button>
-            <button class="cat-pill" onclick="filterCategory('HR & Policies', this)" id="pillPolicy">Politika &amp; Uyum</button>
-          </div>
-        </div>
-
-        <!-- Documents Table -->
-        <div style="overflow-x:auto;">
-          <table class="doc-table">
-            <thead>
-              <tr>
-                <th id="thDocTitle">Belge Başlığı</th>
-                <th id="thDocTier">Gizlilik Düzeyi</th>
-                <th id="thDocCategory">Kategori</th>
-                <th id="thDocAuthor">Yükleyen Rol</th>
-                <th id="thDocHash">Kriptografik SHA-256 Özeti</th>
-                <th style="text-align:right;" id="thDocAction">İşlem</th>
-              </tr>
-            </thead>
-            <tbody id="documentsTableBody"></tbody>
-          </table>
-        </div>
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs-bar">
+        <button class="tab-btn active" onclick="switchTab('repo', this)" id="tabBtnRepo">
+          <i class="bi bi-archive"></i> <span id="lblTabRepo">Kurumsal Belge Ambarı</span> (<span id="docCountBadge">10</span>)
+        </button>
+        <button class="tab-btn" onclick="switchTab('audit', this)" id="tabBtnAudit">
+          <i class="bi bi-shield-check"></i> <span id="lblTabAudit">Erişim &amp; Uyum Denetim İzi</span>
+        </button>
       </div>
-    </div>
 
-    <!-- TAB 2: Audit Logs -->
-    <div id="tab-audit" class="tab-pane" style="display:none;">
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <h2 class="card-title" id="auditTitle"><i class="bi bi-journal-shield text-primary"></i> Değişmez Denetim Günlüğü</h2>
-            <div id="auditDesc" style="font-size:0.85rem;color:var(--text-muted);margin-top:0.2rem;">Her belge indirme, yükleme ve hash doğrulama işlemi kriptografik olarak kaydedilir.</div>
+      <main>
+        <!-- TAB 1: Document Repository -->
+        <div id="tab-repo" class="tab-pane">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" id="repoTitle"><i class="bi bi-files text-primary"></i> Kriptografik Doküman Kasası</h2>
+                <div id="repoDesc" style="font-size:0.85rem;color:var(--text-muted);margin-top:0.2rem;">SHA-256 bütünlük doğrulamalı kurumsal arşiv ve S3 geçici güvenli indirme bağlantıları.</div>
+              </div>
+              <div style="font-size:0.82rem;color:var(--text-muted);font-family:var(--font-mono);" id="lblActiveFilter">
+                Filtre: <strong id="currentFilterLabel" style="color:var(--primary);">Tüm Belgeler</strong>
+              </div>
+            </div>
+
+            <!-- Documents Table -->
+            <div style="overflow-x:auto;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th id="thDocTitle">Belge Başlığı</th>
+                    <th id="thDocTier">Gizlilik Düzeyi</th>
+                    <th id="thDocCategory">Kategori</th>
+                    <th id="thDocAuthor">Yükleyen Rol</th>
+                    <th id="thDocHash">Kriptografik SHA-256 Özeti</th>
+                    <th style="text-align:right;min-width:140px;" id="thDocAction">İşlem</th>
+                  </tr>
+                </thead>
+                <tbody id="documentsTableBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <div id="auditList" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
-      </div>
-    </div>
-  </main>
+        <!-- TAB 2: Audit Logs -->
+        <div id="tab-audit" class="tab-pane" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" id="auditTitle"><i class="bi bi-journal-shield text-primary"></i> Değişmez Denetim Günlüğü</h2>
+                <div id="auditDesc" style="font-size:0.85rem;color:var(--text-muted);margin-top:0.2rem;">Her belge indirme, yükleme, silme ve hash doğrulama işlemi kriptografik olarak kaydedilir.</div>
+              </div>
+            </div>
+
+            <div id="auditList" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Strict Standard Footer -->
+      <footer>
+        <div>Developed by Beraat Yetkin</div>
+        <div>
+          <a href="https://github.com/kubrvk/DocVault-DMS" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-github"></i> GitHub
+          </a>
+        </div>
+      </footer>
+    </div><!-- /.vault-main-body -->
+  </div><!-- /.vault-app-shell -->
 
   <!-- Document Reader Modal -->
   <div class="modal-backdrop" id="readerModal">
@@ -734,6 +885,32 @@
     </div>
   </div>
 
+  <!-- Delete Document Confirmation Modal -->
+  <div class="modal-backdrop" id="deleteDocModal">
+    <div class="modal-card" style="max-width:440px;">
+      <div class="modal-header" style="border-bottom-color:#fee2e2;">
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--danger);" id="deleteDocModalTitle">
+          <i class="bi bi-exclamation-triangle-fill"></i> Belgeyi Kasadan Sil
+        </h3>
+        <button style="border:none;background:none;font-size:1.2rem;cursor:pointer;" onclick="closeDeleteDocModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.9rem;color:#475569;" id="deleteDocModalDesc">
+          Bu kriptografik belgeyi kasadan ve S3 depolama havuzundan kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
+        </p>
+        <div style="background:#fef2f2;border:1px solid #fecaca;padding:0.75rem;border-radius:8px;font-size:0.84rem;color:#991b1b;margin-top:0.75rem;" id="deleteDocTargetInfo">
+          DOC-XXXX
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeDeleteDocModal()" id="btnCancelDeleteDoc">Vazgeç</button>
+        <button type="button" class="btn btn-primary" style="background:var(--danger);border-color:var(--danger);" onclick="executeDeleteDoc()" id="btnConfirmDeleteDoc">
+          <i class="bi bi-trash3-fill"></i> Kalıcı Olarak Sil
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Role Modal -->
   <div class="modal-backdrop" id="authModal">
     <div class="modal-card" style="max-width:460px;">
@@ -770,16 +947,6 @@
     </div>
   </div>
 
-  <!-- Strict Standard Footer -->
-  <footer>
-    <div>Developed by Beraat Yetkin</div>
-    <div>
-      <a href="https://github.com/kubrvk/DocVault-DMS" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-github"></i> GitHub
-      </a>
-    </div>
-  </footer>
-
   <div class="toast" id="toastMsg">
     <i class="bi bi-check-circle-fill" style="color:#0284c7;"></i>
     <span id="toastText">İşlem başarılı.</span>
@@ -790,8 +957,8 @@
 
     const i18n = {
       tr: {
-        brandSub: "Güvenli Kurumsal Belge & Arşiv Yönetimi",
-        headerStatus: "S3 Uyumlu Nesne Depolama • SHA-256 Bütünlük Doğrulamalı",
+        brandSub: "Kriptografik Bulut Kasası",
+        headerStatus: "S3 &bull; SHA-256 Mühürlü",
         switchRole: "Rol Değiştir",
         tabRepo: "Kurumsal Belge Ambarı",
         tabAudit: "Erişim & Uyum Denetim İzi",
@@ -799,11 +966,19 @@
         repoDesc: "SHA-256 bütünlük doğrulamalı kurumsal arşiv ve S3 geçici güvenli indirme bağlantıları.",
         btnUpload: "Yeni Belge Yükle",
         searchPlaceholder: "Başlık, kategori veya SHA-256 hash ile arayın...",
-        catAll: "Tümü",
-        catLegal: "Sözleşmeler",
-        catFinance: "Mali Denetim",
-        catArch: "Mimari Projeler",
-        catPolicy: "Politika & Uyum",
+        storageTitle: "Bulut Alanı",
+        storagePool: "100 MB S3 Havuzu",
+        navFolders: "ARŞİV DİZİNLERİ",
+        navTiers: "GÜVENLİK KADEMELERİ",
+        fldAll: "Tüm Belgeler",
+        fldLegal: "Sözleşmeler",
+        fldFinance: "Mali Denetim",
+        fldArch: "Mimari Projeler",
+        fldPolicy: "Politika & Uyum",
+        lblConfDesc: "En Yüksek Yetki",
+        lblRestrDesc: "Departman İçi",
+        lblInternDesc: "Tüm Personel",
+        lblPubDesc: "Genel Erişim",
         thTitle: "Belge Başlığı",
         thTier: "Gizlilik Düzeyi",
         thCategory: "Kategori",
@@ -811,8 +986,14 @@
         thHash: "Kriptografik SHA-256 Özeti",
         thAction: "İşlem",
         btnInspect: "İncele",
+        btnDeleteDoc: "Sil",
+        deleteDocTitle: "Belgeyi Kasadan Sil",
+        deleteDocDesc: "Bu kriptografik belgeyi kasadan ve S3 depolama havuzundan kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.",
+        btnCancelDeleteDoc: "Vazgeç",
+        btnConfirmDeleteDoc: "Kalıcı Olarak Sil",
+        toastDocDeleted: "Belge kasadan kalıcı olarak silindi ve denetim kaydı oluşturuldu.",
         auditTitle: "Değişmez Denetim Günlüğü",
-        auditDesc: "Her belge indirme, yükleme ve hash doğrulama işlemi kriptografik olarak kaydedilir.",
+        auditDesc: "Her belge indirme, yükleme, silme ve hash doğrulama işlemi kriptografik olarak kaydedilir.",
         readerTitle: "Güvenli Belge İnceleme",
         lblHash: "Kriptografik SHA-256 Özeti:",
         lblS3: "Simüle Edilmiş AWS S3 Presigned URL:",
@@ -843,8 +1024,8 @@
         logout: "Çıkış"
       },
       en: {
-        brandSub: "Secure Enterprise Document & Archive Management",
-        headerStatus: "S3-Compatible Object Store • SHA-256 Integrity Verified",
+        brandSub: "Cryptographic Cloud Vault",
+        headerStatus: "S3 &bull; SHA-256 Sealed",
         switchRole: "Switch Role",
         tabRepo: "Corporate Document Vault",
         tabAudit: "Access & Compliance Audit Trail",
@@ -852,11 +1033,19 @@
         repoDesc: "SHA-256 verified corporate archive with temporary presigned S3 secure retrieval.",
         btnUpload: "Upload New Document",
         searchPlaceholder: "Search by title, category or SHA-256 hash...",
-        catAll: "All",
-        catLegal: "Contracts & Legal",
-        catFinance: "Financial Audits",
-        catArch: "Architecture",
-        catPolicy: "Policy & Compliance",
+        storageTitle: "Cloud Storage",
+        storagePool: "100 MB S3 Pool",
+        navFolders: "ARCHIVE DIRECTORIES",
+        navTiers: "SECURITY CLEARANCES",
+        fldAll: "All Documents",
+        fldLegal: "Contracts & Legal",
+        fldFinance: "Financial Audits",
+        fldArch: "Architecture",
+        fldPolicy: "Policy & Compliance",
+        lblConfDesc: "Highest Clearance",
+        lblRestrDesc: "Departmental",
+        lblInternDesc: "Internal Only",
+        lblPubDesc: "Public Access",
         thTitle: "Document Title",
         thTier: "Security Tier",
         thCategory: "Category",
@@ -864,8 +1053,14 @@
         thHash: "Cryptographic SHA-256 Hash",
         thAction: "Action",
         btnInspect: "Inspect",
+        btnDeleteDoc: "Delete",
+        deleteDocTitle: "Purge Document from Vault",
+        deleteDocDesc: "Are you sure you want to permanently delete this cryptographic document from the vault and S3 object storage? This action cannot be reversed.",
+        btnCancelDeleteDoc: "Cancel",
+        btnConfirmDeleteDoc: "Delete Permanently",
+        toastDocDeleted: "Document permanently purged from vault and audit trail recorded.",
         auditTitle: "Immutable Audit Log",
-        auditDesc: "Every document retrieval, upload, and hash verification is cryptographically recorded.",
+        auditDesc: "Every document retrieval, upload, deletion, and hash verification is cryptographically recorded.",
         readerTitle: "Secure Document Reader",
         lblHash: "Cryptographic SHA-256 Checksum:",
         lblS3: "Simulated AWS S3 Presigned URL:",
@@ -1068,25 +1263,34 @@
       document.getElementById('langTr').className = (lang === 'tr') ? 'active' : '';
       document.getElementById('langEn').className = (lang === 'en') ? 'active' : '';
 
-      // Header & Tabs
+      // Header & Nav
       document.getElementById('brandSub').textContent = dict.brandSub;
       document.getElementById('headerStatus').innerHTML = dict.headerStatus;
       document.getElementById('lblSwitchRole').textContent = dict.switchRole;
       document.getElementById('lblTabRepo').textContent = dict.tabRepo;
       document.getElementById('lblTabAudit').textContent = dict.tabAudit;
 
+      // Sidebar
+      document.getElementById('lblStorageTitle').innerHTML = `<i class="bi bi-hdd-network text-primary"></i> ${dict.storageTitle}`;
+      document.getElementById('lblStoragePool').textContent = dict.storagePool;
+      document.getElementById('lblNavFolders').textContent = dict.navFolders;
+      document.getElementById('lblNavTiers').textContent = dict.navTiers;
+      document.getElementById('fldAll').textContent = dict.fldAll;
+      document.getElementById('fldLegal').textContent = dict.fldLegal;
+      document.getElementById('fldFinance').textContent = dict.fldFinance;
+      document.getElementById('fldArch').textContent = dict.fldArch;
+      document.getElementById('fldPolicy').textContent = dict.fldPolicy;
+      document.getElementById('lblConfDesc').textContent = dict.lblConfDesc;
+      document.getElementById('lblRestrDesc').textContent = dict.lblRestrDesc;
+      document.getElementById('lblInternDesc').textContent = dict.lblInternDesc;
+      document.getElementById('lblPubDesc').textContent = dict.lblPubDesc;
+
       // Repository Tab
       document.getElementById('repoTitle').innerHTML = `<i class="bi bi-files text-primary"></i> ${dict.repoTitle}`;
       document.getElementById('repoDesc').textContent = dict.repoDesc;
       document.getElementById('lblBtnUpload').textContent = dict.btnUpload;
       document.getElementById('searchInput').placeholder = dict.searchPlaceholder;
-
-      // Filter Pills
-      document.getElementById('pillAll').textContent = dict.catAll;
-      document.getElementById('pillLegal').textContent = dict.catLegal;
-      document.getElementById('pillFinance').textContent = dict.catFinance;
-      document.getElementById('pillArch').textContent = dict.catArch;
-      document.getElementById('pillPolicy').textContent = dict.catPolicy;
+      updateFilterLabelText();
 
       // Table Headers
       document.getElementById('thDocTitle').textContent = dict.thTitle;
@@ -1115,11 +1319,18 @@
       document.getElementById('upBtnCancel').textContent = dict.btnCancel;
       document.getElementById('upBtnSubmit').textContent = dict.btnSaveDoc;
 
+      // Delete Modal
+      document.getElementById('deleteDocModalTitle').innerHTML = `<i class="bi bi-exclamation-triangle-fill"></i> ${dict.deleteDocTitle}`;
+      document.getElementById('deleteDocModalDesc').textContent = dict.deleteDocDesc;
+      document.getElementById('btnCancelDeleteDoc').textContent = dict.btnCancelDeleteDoc;
+      document.getElementById('btnConfirmDeleteDoc').innerHTML = `<i class="bi bi-trash3-fill"></i> ${dict.btnConfirmDeleteDoc}`;
+
       // Auth Modal
       document.getElementById('authModalTitle').innerHTML = `<i class="bi bi-people"></i> ${dict.authTitle}`;
       document.getElementById('authModalDesc').textContent = dict.authDesc;
       document.getElementById('authBtnClose').textContent = dict.btnClose;
 
+      // Login Portal
       if (document.getElementById('lblLoginSubtitle')) document.getElementById('lblLoginSubtitle').textContent = dict.loginSubtitle;
       if (document.getElementById('lblLoginUser')) document.getElementById('lblLoginUser').textContent = dict.loginUser;
       if (document.getElementById('lblLoginPass')) document.getElementById('lblLoginPass').textContent = dict.loginPass;
@@ -1141,6 +1352,21 @@
 
       renderDocuments();
       renderAudits();
+      calculateStorage();
+    }
+
+    function updateFilterLabelText() {
+      const dict = i18n[currentLang] || i18n.tr;
+      const map = {
+        'all': dict.fldAll,
+        'Legal & Contracts': dict.fldLegal,
+        'Financial Audits': dict.fldFinance,
+        'Architecture': dict.fldArch,
+        'HR & Policies': dict.fldPolicy
+      };
+      const label = map[activeCategory] || dict.fldAll;
+      const el = document.getElementById('currentFilterLabel');
+      if (el) el.textContent = label;
     }
 
     function saveState() {
@@ -1148,6 +1374,39 @@
       localStorage.setItem('dv_docs_v2', JSON.stringify(documents));
       localStorage.setItem('dv_audits_v2', JSON.stringify(auditLogs));
       document.getElementById('docCountBadge').textContent = documents.length;
+      calculateStorage();
+    }
+
+    function calculateStorage() {
+      let totalMB = 0;
+      documents.forEach(d => {
+        const s = d.size || '1.0 MB';
+        if (s.includes('KB')) {
+          totalMB += parseFloat(s) / 1024;
+        } else {
+          totalMB += parseFloat(s) || 1.0;
+        }
+      });
+      const maxPool = 100;
+      const pct = Math.min(100, (totalMB / maxPool) * 100);
+      const fillEl = document.getElementById('storageFill');
+      const pctEl = document.getElementById('storagePercentText');
+      const usedEl = document.getElementById('storageUsedText');
+      if (fillEl) fillEl.style.width = pct.toFixed(1) + '%';
+      if (pctEl) pctEl.textContent = pct.toFixed(1) + '%';
+      if (usedEl) usedEl.textContent = totalMB.toFixed(1) + ' MB';
+
+      // folder badges
+      const bAll = document.getElementById('badgeAllCount');
+      if (bAll) bAll.textContent = documents.length;
+      const bLegal = document.getElementById('badgeLegalCount');
+      if (bLegal) bLegal.textContent = documents.filter(d => d.category === 'Legal & Contracts').length;
+      const bFinance = document.getElementById('badgeFinanceCount');
+      if (bFinance) bFinance.textContent = documents.filter(d => d.category === 'Financial Audits').length;
+      const bArch = document.getElementById('badgeArchCount');
+      if (bArch) bArch.textContent = documents.filter(d => d.category === 'Architecture').length;
+      const bPolicy = document.getElementById('badgePolicyCount');
+      if (bPolicy) bPolicy.textContent = documents.filter(d => d.category === 'HR & Policies').length;
     }
 
     function showToast(text) {
@@ -1168,8 +1427,9 @@
 
     function filterCategory(cat, btn) {
       activeCategory = cat;
-      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
+      document.querySelectorAll('.vault-nav-item').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      updateFilterLabelText();
       renderDocuments();
     }
 
@@ -1202,7 +1462,7 @@
         tr.innerHTML = `
           <td>
             <div class="doc-title">
-              <i class="bi bi-file-earmark-pdf-fill" style="color:var(--primary);font-size:1.1rem;"></i>
+              <i class="bi bi-file-earmark-pdf-fill" style="color:var(--primary);font-size:1.15rem;"></i>
               <span>${title}</span>
             </div>
             <div style="font-size:0.75rem;color:var(--text-muted);">${doc.size} &bull; ID: ${doc.id}</div>
@@ -1213,9 +1473,12 @@
           <td>
             <div class="doc-hash" title="${doc.hash}">${doc.hash.substring(0, 16)}...${doc.hash.substring(doc.hash.length - 8)}</div>
           </td>
-          <td style="text-align:right;">
-            <button class="btn btn-outline btn-sm" onclick="inspectDoc('${doc.id}')">
+          <td style="text-align:right;white-space:nowrap;">
+            <button class="btn btn-outline btn-sm" onclick="inspectDoc('${doc.id}')" title="${dict.btnInspect}">
               <i class="bi bi-eye"></i> ${dict.btnInspect}
+            </button>
+            <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:#fca5a5;margin-left:0.35rem;" onclick="promptDeleteDoc('${doc.id}')" title="${dict.btnDeleteDoc}">
+              <i class="bi bi-trash3"></i>
             </button>
           </td>
         `;
@@ -1260,6 +1523,53 @@
       const dict = i18n[currentLang] || i18n.tr;
       showToast(dict.toastPresigned);
       closeReaderModal();
+    }
+
+    let docToDeleteId = null;
+
+    function promptDeleteDoc(id) {
+      const doc = documents.find(d => d.id === id);
+      if (!doc) return;
+      docToDeleteId = id;
+      const title = (currentLang === 'tr') ? (doc.title_tr || doc.title) : (doc.title_en || doc.title);
+      const dict = i18n[currentLang] || i18n.tr;
+
+      document.getElementById('deleteDocModalTitle').innerHTML = `<i class="bi bi-exclamation-triangle-fill text-danger"></i> ${dict.deleteDocTitle}`;
+      document.getElementById('deleteDocModalDesc').textContent = dict.deleteDocDesc;
+      document.getElementById('deleteDocTargetInfo').innerHTML = `<strong>${doc.id}</strong> &bull; ${title}<br><span style="font-family:var(--font-mono);font-size:0.75rem;color:#64748b;">SHA-256: ${doc.hash}</span>`;
+      document.getElementById('deleteDocModal').classList.add('active');
+    }
+
+    function closeDeleteDocModal() {
+      document.getElementById('deleteDocModal').classList.remove('active');
+      docToDeleteId = null;
+    }
+
+    function executeDeleteDoc() {
+      if (!docToDeleteId) return;
+      const dict = i18n[currentLang] || i18n.tr;
+      const doc = documents.find(d => d.id === docToDeleteId);
+      const title = doc ? ((currentLang === 'tr') ? (doc.title_tr || doc.title) : (doc.title_en || doc.title)) : docToDeleteId;
+
+      documents = documents.filter(d => d.id !== docToDeleteId);
+
+      const preset = rolePresets[currentRoleIndex];
+      const activeRole = (currentLang === 'tr') ? preset.trName : preset.enName;
+
+      auditLogs.unshift({
+        user: activeRole,
+        action: 'DELETION_PURGE',
+        target_tr: `${docToDeleteId} (${title}) kalıcı olarak silindi`,
+        target_en: `${docToDeleteId} (${title}) permanently purged`,
+        time_tr: 'Az önce',
+        time_en: 'Just now'
+      });
+
+      saveState();
+      renderDocuments();
+      renderAudits();
+      closeDeleteDocModal();
+      showToast(dict.toastDocDeleted);
     }
 
     function openUploadModal() { document.getElementById('uploadModal').classList.add('active'); }
@@ -1309,6 +1619,7 @@
       saveState();
       renderDocuments();
       closeUploadModal();
+      document.getElementById('upTitle').value = '';
       showToast(`${dict.toastDocSealed} ${newId}`);
     }
 
@@ -1320,11 +1631,14 @@
         const target = (currentLang === 'tr') ? (a.target_tr || a.target) : (a.target_en || a.target);
         const time = (currentLang === 'tr') ? (a.time_tr || a.time) : (a.time_en || a.time);
 
+        const isDelete = a.action === 'DELETION_PURGE';
+        const actionColor = isDelete ? 'var(--danger)' : 'var(--primary)';
+
         const div = document.createElement('div');
         div.style.cssText = 'background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:0.85rem 1rem;display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;';
         div.innerHTML = `
           <div>
-            <strong>[${a.user}]</strong> &bull; <span style="color:var(--primary);font-weight:700;">${a.action}</span> &bull; <span>${target}</span>
+            <strong>[${a.user}]</strong> &bull; <span style="color:${actionColor};font-weight:700;">${a.action}</span> &bull; <span>${target}</span>
           </div>
           <span style="font-size:0.75rem;color:var(--text-muted);">${time}</span>
         `;
